@@ -12,6 +12,7 @@ namespace MagicPurse.Tests
     {
         [Test]
         [TestCase(6, 4)]
+        [TestCase(10, 4)]
         [TestCase(20, 77)]
         [TestCase(24, 141)]
         [TestCase(48, 2377)]

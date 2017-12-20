@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -29,10 +30,38 @@ namespace MagicPurse
             long sum = 0;
             foreach (var combi in _combinations)
             {
-                sum += PermutationWithRepetitions(combi);
+                //sum += PermutationWithRepetitions(combi);
+                sum += GetHalfCombis(combi, 0, combi.Sum() / 2);
             }
 
             return sum;
+        }
+
+        private long GetHalfCombis(long[] combi, int index, long remaining)
+        {
+            long result = 0;
+            
+            long upper = Math.Min(combi[index], remaining);
+            for (long j = upper; j >= 0; j--)
+            {
+                var actualRemaining = remaining - j;
+                if (actualRemaining == 0)
+                {
+                    result++;
+                }
+                else
+                {
+                    if ((index < combi.Length - 1)
+                      && (combi.Skip(index + 1).Sum() >= actualRemaining))
+                    {
+                        result += GetHalfCombis(combi, index + 1, actualRemaining);
+                    }
+                        
+                }
+                    
+            }
+            
+            return result;
         }
 
         private void GetCombi(long number, int i, long[] combination)
