@@ -16,6 +16,7 @@ namespace MagicPurse.Tests
         [TestCase(20, 77)]
         [TestCase(24, 141)]
         [TestCase(48, 2377)]
+        [TestCase(240, 0)]
         public void FirstTest(long number, long expectedResult)
         {
             MagicPurse purse =new MagicPurse();

@@ -16,8 +16,8 @@ namespace MagicPurse
             12, //Sixpence 6d
             24, //Shilling 1/-
             48, //Two shillings 
-            60  //Two shillings and sixpence
-            
+            60 //Two shillings and sixpence
+
         };
 
         private List<long[]> _combinations = new List<long[]>();
@@ -30,38 +30,50 @@ namespace MagicPurse
             long sum = 0;
             foreach (var combi in _combinations)
             {
-                //sum += PermutationWithRepetitions(combi);
-                sum += GetHalfCombis(combi, 0, combi.Sum() / 2);
+                Console.WriteLine("Original combination");
+                PrintCombination(combi);
+                Console.WriteLine("Subsets");
+                long[] resultCombi = new long[combi.Length];
+                sum += GetHalfCombis(combi, 0, combi.Sum() / 2, resultCombi);
             }
 
             return sum;
         }
 
-        private long GetHalfCombis(long[] combi, int index, long remaining)
+        private long GetHalfCombis(long[] combi, int index, long remaining, long[] resultCombi)
         {
             long result = 0;
-            
+
             long upper = Math.Min(combi[index], remaining);
+            var nextElementsSum = combi.Skip(index + 1).Sum();
             for (long j = upper; j >= 0; j--)
             {
+                resultCombi[index] = j;
                 var actualRemaining = remaining - j;
                 if (actualRemaining == 0)
                 {
+                    PrintCombination(resultCombi);
                     result++;
                 }
                 else
                 {
-                    if ((index < combi.Length - 1)
-                      && (combi.Skip(index + 1).Sum() >= actualRemaining))
-                    {
-                        result += GetHalfCombis(combi, index + 1, actualRemaining);
-                    }
-                        
-                }
                     
+                    if ((index < combi.Length - 1)
+                        && (nextElementsSum >= actualRemaining))
+                    {
+                        result += GetHalfCombis(combi, index + 1, actualRemaining, resultCombi);
+                    }
+                }
+
             }
-            
+
             return result;
+        }
+
+        private void PrintCombination(long[] combi)
+        {
+            string res = combi.Aggregate(string.Empty, (current, l) => current + l.ToString("00") + "|");
+            Console.WriteLine(res);
         }
 
         private void GetCombi(long number, int i, long[] combination)
@@ -90,25 +102,6 @@ namespace MagicPurse
 
             }
         }
-
-        private long Factorial(long x)
-        {
-            if (x <= 1)
-            {
-                return 1;
-            }
-            return x * Factorial(x - 1);
-        }
-
-        private long PermutationWithRepetitions(long[] combinations)
-        {
-            long denominator = 1;
-            long numerator = Factorial(combinations.Sum());
-            for (int i = 0; i < combinations.Length; i++)
-            {
-                denominator *= Factorial(combinations[i]);
-            }
-            return numerator / denominator;
-        }
     }
+
 }
