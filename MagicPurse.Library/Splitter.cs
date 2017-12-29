@@ -7,7 +7,7 @@ namespace MagicPurse.Library
         public long GetNumberOfEqualSplits(long[] combination)
         {
             var combinationSum = combination.Sum();
-            if (combinationSum % 2 != 0)
+            if (combinationSum == 0 || combinationSum % 2 != 0)
                 return 0;
             return GetNumberOfEqualSplits(combination, 0, combinationSum / 2, combinationSum, new long[combination.Length, combinationSum]);
             

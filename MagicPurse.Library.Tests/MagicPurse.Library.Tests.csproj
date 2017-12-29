@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AmountParserTest.cs" />
-    <Compile Include="MagicPurseAsync.cs" />
+    <Compile Include="MagicPurseAsyncTests.cs" />
     <Compile Include="MagicPurseQueueTests.cs" />
     <Compile Include="MagicPursesTests.cs" />
     <Compile Include="MagicPurseSyncTests.cs" />
