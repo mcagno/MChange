@@ -1,6 +1,6 @@
 ﻿namespace MagicPurse.Library
 {
-    public class ChangeMakerBase
+    public class MagicPurseBase
     {
         protected readonly long[] Coins =
         {

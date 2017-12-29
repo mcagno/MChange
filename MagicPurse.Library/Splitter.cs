@@ -2,72 +2,61 @@
 
 namespace MagicPurse.Library
 {
-    public interface ISplitter
-    {
-        long GetNumberOfEqualSplits(long[] combination);
-    }
-
     public class Splitter : ISplitter
     {
         public long GetNumberOfEqualSplits(long[] combination)
         {
-            var sum = combination.Sum();
-            return GetNumberOfEqualSplits(combination, 0, sum / 2, sum, new long[combination.Length, sum], false);
+            var combinationSum = combination.Sum();
+            if (combinationSum % 2 != 0)
+                return 0;
+            return GetNumberOfEqualSplits(combination, 0, combinationSum / 2, combinationSum, new long[combination.Length, combinationSum]);
+            
         }
 
-        private long GetNumberOfEqualSplits(long[] combi, int index, long remaining, long remainingInCombi, long[,] cachedValues, bool parallel)
+        private long GetNumberOfEqualSplits(long[] combination, int index, long remaining, long remainingInNextIndexes, long[,] cache)
         {
 
             long result = 0;
 
-            var cachedValue = cachedValues[index, remaining];
+            var cachedValue = cache[index, remaining];
             if (cachedValue != 0)
             {
-#if VERBOSE
-                Console.Write($"I:{index} R:{remaining}");
-                Console.WriteLine(" cached.");
-#endif
                 return cachedValue;
             }
 
-            while (combi[index] == 0)
+            while (combination[index] == 0)
             {
                 index++;
             }
 
-            long upper;
-            if (combi[index] >= remaining)
+            long upperLimit;
+            if (combination[index] >= remaining)
             {
-                upper = remaining - 1;
+                upperLimit = remaining - 1;
                 result++;
             }
             else
             {
-                upper = combi[index];
+                upperLimit = combination[index];
             }
 
-            if (index < combi.Length - 1)
+            if (index < combination.Length - 1)
             {
-                remainingInCombi -= combi[index];
-                var limit = remaining - remainingInCombi;
-                if (limit < 0)
+                remainingInNextIndexes -= combination[index];
+                var lowerLimit = remaining - remainingInNextIndexes;
+                if (lowerLimit < 0)
                 {
-                    limit = 0;
+                    lowerLimit = 0;
                 }
 
-                for (long j = upper; j >= limit; j--)
+                for (long j = upperLimit; j >= lowerLimit; j--)
                 {
-                    var halfCombis = GetNumberOfEqualSplits(combi, index + 1, remaining - j, remainingInCombi, cachedValues, false);
+                    var halfCombis = GetNumberOfEqualSplits(combination, index + 1, remaining - j, remainingInNextIndexes, cache);
                     result += halfCombis;
                 }
 
             }
-
-            cachedValues[index, remaining] = result;
-#if VERBOSE
-            Console.Write($"I:{index} R:{remaining}");
-            Console.WriteLine(" calculated.");
-#endif
+            cache[index, remaining] = result;
             return result;
         }
     }

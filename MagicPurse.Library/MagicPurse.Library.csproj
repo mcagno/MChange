@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChangeMakerQueue.cs" />
-    <Compile Include="ChangeMaker.cs" />
-    <Compile Include="ChangeMakerAsync.cs" />
-    <Compile Include="ChangeMakerBase.cs" />
-    <Compile Include="IChangeMaker.cs" />
+    <Compile Include="AmountParser.cs" />
+    <Compile Include="CombinationCache.cs" />
+    <Compile Include="MagicPurseQueue.cs" />
+    <Compile Include="MagicPurseSync.cs" />
+    <Compile Include="MagicPurseAsync.cs" />
+    <Compile Include="MagicPurseBase.cs" />
+    <Compile Include="IMagicPurse.cs" />
+    <Compile Include="ISplitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Splitter.cs" />
   </ItemGroup>
