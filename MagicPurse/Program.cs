@@ -11,12 +11,12 @@ namespace MagicPurse
             Calculate(240);
             Calculate(480);
             //Calculate(4800);
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         private static void Calculate(int value)
         {
-            ChangeMaker purse = new ChangeMaker();
+            ChangeMakerQueue purse = new ChangeMakerQueue(new Splitter());
             var now = DateTime.Now;
             long makeEvenChange = purse.MakeEvenChange(value);
             var timeSpan = DateTime.Now - now;
